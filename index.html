@@ -2,27 +2,40 @@
 <html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/>
 <title>3-Week Sales CRM</title>
 <style>
-:root{--bone:#f7f2e8;--coffee:#3b2a1a;--honey:#d7a23a;--glass:rgba(255,255,255,.06)}
-html,body{margin:0;color:var(--bone);background:
-  radial-gradient(1200px 600px at 20% 0%, rgba(215,162,58,0.12), transparent),
-  radial-gradient(1200px 800px at 80% 20%, rgba(247,242,232,0.08), transparent),
-  linear-gradient(180deg,#1c140e,#0f0b07);
-font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+/* Updated color palette inspired by The Travel Agency branding */
+:root{
+  --bone:#f5f1e5; /* light cream background */
+  --coffee:#3c2a21; /* dark brown text */
+  --honey:#e6582c; /* warm coral accent */
+  --mint:#00cfcf;  /* mint accent used on buttons and highlights */
+  --glass:rgba(255,255,255,0.10); /* subtle card overlay */
+}
+html,body{
+  margin:0;
+  color:var(--coffee);
+  /* Soft, uplifting background inspired by the Travel Agency’s airy vibe */
+  background:
+    radial-gradient(1200px 600px at 20% 0%, rgba(0,207,204,0.10), transparent),
+    radial-gradient(1200px 800px at 80% 20%, rgba(230,88,44,0.08), transparent),
+    linear-gradient(180deg,#f5f1e5,#fefdf9);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
 .container{max-width:1200px;margin:24px auto 80px;padding:0 16px}
+/* Header styling: simple cream backdrop with no sticky positioning */
 .header{
-  /* Let the header scroll with the page to prevent it from covering content */
   position: static;
-  backdrop-filter: blur(6px);
-  background: linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,0));
+  background: linear-gradient(180deg,rgba(245,241,229,0.95),rgba(245,241,229,0.75));
+  color: var(--coffee);
+  backdrop-filter: none;
   z-index: 10;
   padding: 16px 0 8px;
 }
-h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px rgba(215,162,58,.2)}
+h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px rgba(230,88,44,.2)}
 .kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 20px}
-.card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,.03));border:1px solid rgba(215,162,58,.25);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .15s,box-shadow .15s,border-color .15s}
-.card:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(215,162,58,.12);border-color:rgba(215,162,58,.45)}
+.card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,.03));border:1px solid rgba(60,42,33,.15);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .15s,box-shadow .15s,border-color .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(60,42,33,.12);border-color:rgba(230,88,44,.45)}
 .metric{font-size:28px;font-weight:800;margin-top:4px;letter-spacing:.3px}
-.muted{color:#d9cfbf;opacity:.85;font-size:12px}
+.muted{color:#7a6653;opacity:.85;font-size:12px}
 .section-title{margin:28px 0 8px;font-size:18px;font-weight:800;letter-spacing:.4px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:900px){
@@ -41,21 +54,23 @@ h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px r
   table{display:block;overflow-x:auto;}
 }
 
-table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(255,255,255,.02);border:1px solid rgba(215,162,58,.25);border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(255,255,255,.02);border:1px solid rgba(60,42,33,.15);border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 /* Disable sticky positioning on table headers to avoid overlaying the content when scrolling */
 thead th{
   z-index:5;
-  background:linear-gradient(180deg,rgba(215,162,58,.15),rgba(215,162,58,.05));
+  /* Use coral gradient for table header backgrounds */
+  background:linear-gradient(180deg,rgba(230,88,44,.15),rgba(230,88,44,.05));
   backdrop-filter:blur(6px);
 }
 th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
-tbody tr{transition:background .12s, transform .12s}tbody tr:hover{background:rgba(215,162,58,.08);transform:scale(1.002)}
-.right{text-align:right}.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid rgba(215,162,58,.3);font-weight:700}.up{color:#00d47a}.down{color:#ff6b6b}
-button.btn{background:var(--honey);color:var(--coffee);padding:4px 10px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+tbody tr{transition:background .12s, transform .12s}tbody tr:hover{background:rgba(230,88,44,.08);transform:scale(1.002)}
+.right{text-align:right}.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid rgba(60,42,33,.3);font-weight:700}.up{color:var(--mint)}.down{color:var(--honey)}
+button.btn{background:var(--mint);color:var(--coffee);padding:4px 10px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .15s}
+button.btn:hover{background:rgba(0,207,207,0.8)}
 button.btn:disabled{opacity:.5;cursor:not-allowed}
 </style></head>
 <body>
-<div class='header'><div class='container'><h1>3-Week Sales CRM</h1><div class='muted'>Bone • Coffee • Honey — vintage look, sharp numbers</div></div></div>
+<div class='header'><div class='container'><h1>3-Week Sales CRM</h1><div class='muted'>Cream • Coral • Mint — inspired by The Travel Agency</div></div></div>
 <div class='container'>
   <div class='kpis'>
     <div class='card'><div class='muted'>Total Revenue</div><div id='kpi-rev' class='metric'>—</div></div>
