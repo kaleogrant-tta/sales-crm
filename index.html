@@ -78,47 +78,70 @@ async function load(){
   document.getElementById('kpi-share').textContent=fmtPct(DATA.kpis?.top20_sku_share_pct);
 
   const moverCols=[
-    {key:'product_name',label:'Product'},
-    {key:'vendor_name',label:'Vendor'},
+    {key:'product',label:'Product'},
+    {key:'vendor',label:'Vendor'},
     {key:'W1',label:'W1',format:'currency',align:'right'},
     {key:'W2',label:'W2',format:'currency',align:'right'},
     {key:'W3',label:'W3',format:'currency',align:'right'},
-    {key:'pct_change_w3_vs_w1',label:'W3 vs W1',format:'pct',align:'right'}
+    {key:'W3_vs_W1',label:'W3 vs W1',format:'pct',align:'right'}
   ];
-  table(document.getElementById('movers-growers'), pickTopN(DATA.sku_movers_up,'pct_change_w3_vs_w1',2,false), moverCols);
-  table(document.getElementById('movers-shrinkers'), pickTopN(DATA.sku_movers_down,'pct_change_w3_vs_w1',2,true), moverCols);
+  table(
+    document.getElementById('movers-growers'),
+    pickTopN(DATA.sku_movers_up,'W3_vs_W1',2,false),
+    moverCols
+  );
+  table(
+    document.getElementById('movers-shrinkers'),
+    pickTopN(DATA.sku_movers_down,'W3_vs_W1',2,true),
+    moverCols
+  );
 
   const revCols=[
-    {key:'product_name',label:'Product'},
-    {key:'vendor_name',label:'Vendor'},
+    {key:'product',label:'Product'},
+    {key:'vendor',label:'Vendor'},
     {key:'category',label:'Category'},
     {key:'units',label:'Units',format:'int',align:'right'},
     {key:'revenue',label:'Revenue',format:'currency',align:'right'},
-    {key:'pct_of_total_revenue',label:'% of Total',format:'pct',align:'right'}
+    {key:'pct_total',label:'% of Total',format:'pct',align:'right'}
   ];
   table(document.getElementById('top-sellers'), (DATA.sku_top_revenue||[]).slice(0,25), revCols);
   table(document.getElementById('bottom-sellers'), (DATA.sku_bottom_revenue||[]).slice(0,25), revCols);
 
   const stCols=[
-    {key:'product_name',label:'Product'},
-    {key:'vendor_name',label:'Vendor'},
-    {key:'category',label:'Category'},
-    {key:'units',label:'Units',format:'int',align:'right'},
+    {key:'product',label:'Product'},
+    {key:'vendor',label:'Vendor'},
+    {key:'units_sold',label:'Units',format:'int',align:'right'},
     {key:'units_received',label:'Received',format:'int',align:'right'},
     {key:'sell_through',label:'Sell-Through',format:'pct',align:'right'}
   ];
-  table(document.getElementById('sell-top'), (DATA.sku_sellthrough_top||[]).slice(0,25), stCols);
-  table(document.getElementById('sell-bottom'), (DATA.sku_sellthrough_bottom||[]).slice(0,25), stCols);
+  table(
+    document.getElementById('sell-top'),
+    (DATA.sku_sellthrough_top||[]).slice(0,25),
+    stCols
+  );
+  table(
+    document.getElementById('sell-bottom'),
+    (DATA.sku_sellthrough_bottom||[]).slice(0,25),
+    stCols
+  );
 
   const unitCols=[
-    {key:'product_name',label:'Product'},
-    {key:'vendor_name',label:'Vendor'},
+    {key:'product',label:'Product'},
+    {key:'vendor',label:'Vendor'},
     {key:'category',label:'Category'},
     {key:'units',label:'Units',format:'int',align:'right'},
     {key:'revenue',label:'Revenue',format:'currency',align:'right'}
   ];
-  table(document.getElementById('most-units'), (DATA.sku_most_units||[]).slice(0,25), unitCols);
-  table(document.getElementById('least-units'), (DATA.sku_least_units||[]).slice(0,25), unitCols);
+  table(
+    document.getElementById('most-units'),
+    (DATA.sku_most_units||[]).slice(0,25),
+    unitCols
+  );
+  table(
+    document.getElementById('least-units'),
+    (DATA.sku_least_units||[]).slice(0,25),
+    unitCols
+  );
 
   loadLoyalty();
 }
