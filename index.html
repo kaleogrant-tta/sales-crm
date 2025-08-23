@@ -19,6 +19,17 @@ h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px r
 .section-title{margin:28px 0 8px;font-size:18px;font-weight:800;letter-spacing:.4px}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:900px){.kpis{grid-template-columns:1fr}.two-col{grid-template-columns:1fr} thead th{top:96px}}
+@media(max-width:600px){
+  .kpis{grid-template-columns:1fr;}
+  .two-col{grid-template-columns:1fr;}
+  h1{font-size:24px;}
+  .metric{font-size:24px;}
+  .section-title{font-size:16px;}
+  th,td{padding:8px 8px;font-size:11px;}
+  .container{padding:0 8px;margin:24px auto 40px;}
+  table{display:block;overflow-x:auto;}
+}
+
 table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(255,255,255,.02);border:1px solid rgba(215,162,58,.25);border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 thead th{position:sticky;top:56px;z-index:5;background:linear-gradient(180deg,rgba(215,162,58,.15),rgba(215,162,58,.05));backdrop-filter:blur(6px)}
 th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
