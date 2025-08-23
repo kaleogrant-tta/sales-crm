@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='utf-8'/><meta name='viewport' content='width=device-width,initial-scale=1'/>
+<title>3-Week Sales CRM</title>
+<style>
+:root{--bone:#f7f2e8;--coffee:#3b2a1a;--honey:#d7a23a;--glass:rgba(255,255,255,.06)}
+html,body{margin:0;color:var(--bone);background:
+  radial-gradient(1200px 600px at 20% 0%, rgba(215,162,58,0.12), transparent),
+  radial-gradient(1200px 800px at 80% 20%, rgba(247,242,232,0.08), transparent),
+  linear-gradient(180deg,#1c140e,#0f0b07);
+font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+.container{max-width:1200px;margin:24px auto 80px;padding:0 16px}
+.header{position:sticky;top:0;backdrop-filter:blur(6px);background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,0));z-index:10;padding:16px 0 8px}
+h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px rgba(215,162,58,.2)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 20px}
+.card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,.03));border:1px solid rgba(215,162,58,.25);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .15s,box-shadow .15s,border-color .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(215,162,58,.12);border-color:rgba(215,162,58,.45)}
+.metric{font-size:28px;font-weight:800;margin-top:4px;letter-spacing:.3px}
+.muted{color:#d9cfbf;opacity:.85;font-size:12px}
+.section-title{margin:28px 0 8px;font-size:18px;font-weight:800;letter-spacing:.4px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:900px){.kpis{grid-template-columns:1fr}.two-col{grid-template-columns:1fr} thead th{top:96px}}
+table{width:100%;border-collapse:separate;border-spacing:0;background:rgba(255,255,255,.02);border:1px solid rgba(215,162,58,.25);border-radius:16px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+thead th{position:sticky;top:56px;z-index:5;background:linear-gradient(180deg,rgba(215,162,58,.15),rgba(215,162,58,.05));backdrop-filter:blur(6px)}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px}
+tbody tr{transition:background .12s, transform .12s}tbody tr:hover{background:rgba(215,162,58,.08);transform:scale(1.002)}
+.right{text-align:right}.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid rgba(215,162,58,.3);font-weight:700}.up{color:#00d47a}.down{color:#ff6b6b}
+button.btn{background:var(--honey);color:var(--coffee);padding:4px 10px;border:none;border-radius:8px;cursor:pointer;font-weight:600}
+button.btn:disabled{opacity:.5;cursor:not-allowed}
+</style></head>
+<body>
+<div class='header'><div class='container'><h1>3-Week Sales CRM</h1><div class='muted'>Bone • Coffee • Honey — vintage look, sharp numbers</div></div></div>
+<div class='container'>
+  <div class='kpis'>
+    <div class='card'><div class='muted'>Total Revenue</div><div id='kpi-rev' class='metric'>—</div></div>
+    <div class='card'><div class='muted'>Total Units</div><div id='kpi-units' class='metric'>—</div></div>
+    <div class='card'><div class='muted'>Top 20 SKU Share</div><div id='kpi-share' class='metric'>—</div></div>
+  </div>
+
+  <div class='section-title'>Movers — Top 2 Growers & Top 2 Shrinkers</div>
+  <div class='two-col'>
+    <div class='card'><div class='chip up'>▲ Top Growers</div><table id='movers-growers'></table></div>
+    <div class='card'><div class='chip down'>▼ Top Shrinkers</div><table id='movers-shrinkers'></table></div>
+  </div>
+
+  <div class='section-title'>Top & Bottom Sellers (Revenue)</div>
+  <div class='card'><table id='top-sellers'></table></div>
+  <div class='card' style='margin-top:12px'><table id='bottom-sellers'></table></div>
+
+  <div class='section-title'>Sell-Through</div>
+  <div class='card'><table id='sell-top'></table></div>
+  <div class='card' style='margin-top:12px'><table id='sell-bottom'></table></div>
+
+  <div class='section-title'>Most & Least Sold (Units)</div>
+  <div class='card'><table id='most-units'></table></div>
+  <div class='card' style='margin-top:12px'><table id='least-units'></table></div>
+
+  <div class='section-title'>Loyalty — Frequent Flyers</div>
+  <div class='card'>
+    <div class='muted'>Counts show the current 3-week window. Threshold: <span id="ff-threshold">10</span>.</div>
+    <table id='loyalty-table'></table>
+    <div class='muted' style='margin-top:8px'>Click <b>Redeem</b> when a budtender crosses a multiple of the threshold; this will notify the manager by email.</div>
+  </div>
+</div>
+
+<script>
+const fmtCurrency=n=>(n??0).toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
+const fmtInt=n=>(n??0).toLocaleString(undefined,{maximumFractionDigits:0});
+const fmtPct=n=>((n??0)*100).toLocaleString(undefined,{maximumFractionDigits:1})+'%';
+function table(el,rows,cols){const thead=document.createElement('thead');const trh=document.createElement('tr');cols.forEach(c=>{const th=document.createElement('th');th.textContent=c.label;trh.appendChild(th)});thead.appendChild(trh);const tbody=document.createElement('tbody');rows.forEach(r=>{const tr=document.createElement('tr');cols.forEach(c=>{const td=document.createElement('td');let v=r[c.key];if(c.format==='currency')v=fmtCurrency(v);if(c.format==='int')v=fmtInt(v);if(c.format==='pct')v=fmtPct(v);td.textContent=(v===undefined||v===null||v==='')?'—':v;if(c.align==='right')td.classList.add('right');tr.appendChild(td)});tbody.appendChild(tr)});el.innerHTML='';el.appendChild(thead);el.appendChild(tbody)}
+function pickTopN(arr,key,n,asc=false){const copy=[...(arr||[])].filter(x=>x&&x[key]!==null&&x[key]!==undefined);copy.sort((a,b)=>asc?(a[key]-b[key]):(b[key]-a[key]));return copy.slice(0,n)}
+async function load(){
+  let DATA=null;
+  try{const res=await fetch('sales_crm_sku_data.json');if(!res.ok)throw new Error();DATA=await res.json()}catch(e){DATA={kpis:{},sku_movers_up:[],sku_movers_down:[],sku_top_revenue:[],sku_bottom_revenue:[],sku_sellthrough_top:[],sku_sellthrough_bottom:[],sku_most_units:[],sku_least_units:[]}};
+  window.DATA=DATA;
+
+  document.getElementById('kpi-rev').textContent=fmtCurrency(DATA.kpis?.total_revenue);
+  document.getElementById('kpi-units').textContent=fmtInt(DATA.kpis?.total_units);
+  document.getElementById('kpi-share').textContent=fmtPct(DATA.kpis?.top20_sku_share_pct);
+
+  const moverCols=[
+    {key:'product_name',label:'Product'},
+    {key:'vendor_name',label:'Vendor'},
+    {key:'W1',label:'W1',format:'currency',align:'right'},
+    {key:'W2',label:'W2',format:'currency',align:'right'},
+    {key:'W3',label:'W3',format:'currency',align:'right'},
+    {key:'pct_change_w3_vs_w1',label:'W3 vs W1',format:'pct',align:'right'}
+  ];
+  table(document.getElementById('movers-growers'), pickTopN(DATA.sku_movers_up,'pct_change_w3_vs_w1',2,false), moverCols);
+  table(document.getElementById('movers-shrinkers'), pickTopN(DATA.sku_movers_down,'pct_change_w3_vs_w1',2,true), moverCols);
+
+  const revCols=[
+    {key:'product_name',label:'Product'},
+    {key:'vendor_name',label:'Vendor'},
+    {key:'category',label:'Category'},
+    {key:'units',label:'Units',format:'int',align:'right'},
+    {key:'revenue',label:'Revenue',format:'currency',align:'right'},
+    {key:'pct_of_total_revenue',label:'% of Total',format:'pct',align:'right'}
+  ];
+  table(document.getElementById('top-sellers'), (DATA.sku_top_revenue||[]).slice(0,25), revCols);
+  table(document.getElementById('bottom-sellers'), (DATA.sku_bottom_revenue||[]).slice(0,25), revCols);
+
+  const stCols=[
+    {key:'product_name',label:'Product'},
+    {key:'vendor_name',label:'Vendor'},
+    {key:'category',label:'Category'},
+    {key:'units',label:'Units',format:'int',align:'right'},
+    {key:'units_received',label:'Received',format:'int',align:'right'},
+    {key:'sell_through',label:'Sell-Through',format:'pct',align:'right'}
+  ];
+  table(document.getElementById('sell-top'), (DATA.sku_sellthrough_top||[]).slice(0,25), stCols);
+  table(document.getElementById('sell-bottom'), (DATA.sku_sellthrough_bottom||[]).slice(0,25), stCols);
+
+  const unitCols=[
+    {key:'product_name',label:'Product'},
+    {key:'vendor_name',label:'Vendor'},
+    {key:'category',label:'Category'},
+    {key:'units',label:'Units',format:'int',align:'right'},
+    {key:'revenue',label:'Revenue',format:'currency',align:'right'}
+  ];
+  table(document.getElementById('most-units'), (DATA.sku_most_units||[]).slice(0,25), unitCols);
+  table(document.getElementById('least-units'), (DATA.sku_least_units||[]).slice(0,25), unitCols);
+
+  loadLoyalty();
+}
+async function loadLoyalty(){
+  let cfg={threshold:10,email_to:"",email_subject:"Redeem",email_from:""};
+  try{const r=await fetch('loyalty_config.json');if(r.ok)cfg=await r.json()}catch(e){}
+  const thr = cfg.threshold??10;
+  document.getElementById('ff-threshold').textContent=thr;
+  let rows=[];try{const r=await fetch('loyalty_signups.json');if(r.ok)rows=await r.json()}catch(e){}
+  const today=new Date();const fallbackStart=new Date(today.getTime()-21*86400000);let start=fallbackStart,end=today;
+  if(window.DATA&&window.DATA.data_notes){if(window.DATA.data_notes.period_start)start=new Date(window.DATA.data_notes.period_start+"T00:00:00");if(window.DATA.data_notes.period_end)end=new Date(window.DATA.data_notes.period_end+"T23:59:59")}
+  const inWindow=rows.filter(r=>{const d=new Date((r.date||'')+'T00:00:00');return !isNaN(d)&&d>=start&&d<=end});
+  const map=new Map();inWindow.forEach(r=>{const key=r.budtender||'Unknown';if(!map.get(key))map.set(key,{budtender:key,count:0,store:r.store||''});map.get(key).count+=1});
+  const data=Array.from(map.values()).map(x=>{const nextMilestone=Math.ceil((x.count||0)/thr)*thr||thr;const progress=((x.count||0)%thr)/thr;const canRedeem=(x.count>0)&&(x.count%thr===0);return{budtender:x.budtender,store:x.store,count:x.count,next_at:nextMilestone,progress_pct:progress,canRedeem}}).sort((a,b)=>b.count-a.count);
+  const cols=[{key:'budtender',label:'Budtender'},{key:'store',label:'Store'},{key:'count',label:'Frequent Flyers',align:'right'},{key:'next_at',label:'Next at',align:'right'},{key:'progress_pct',label:'Progress',align:'right',format:'pct'},{key:'__action',label:'Action'}];
+  const tableEl=document.getElementById('loyalty-table');const thead=document.createElement('thead');const trh=document.createElement('tr');cols.forEach(c=>{const th=document.createElement('th');th.textContent=c.label;trh.appendChild(th)});thead.appendChild(trh);const tbody=document.createElement('tbody');data.forEach(row=>{const tr=document.createElement('tr');cols.forEach(c=>{const td=document.createElement('td');if(c.key==='__action'){const btn=document.createElement('button');btn.textContent=row.canRedeem?'Redeem':'—';btn.disabled=!row.canRedeem;btn.className='btn';btn.onclick=async()=>{try{const resp=await fetch('/.netlify/functions/redeem-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({budtender:row.budtender,store:row.store,count:row.count,threshold:thr,to:cfg.email_to,subject:cfg.email_subject})});if(!resp.ok)throw new Error('function failed');alert('Redeem request sent.')}catch(e){const subject=encodeURIComponent((cfg.email_subject||'Redeem')+' - '+row.budtender);const body=encodeURIComponent(`Budtender: ${row.budtender}\nStore: ${row.store}\nFrequent Flyers: ${row.count}\nThreshold: ${thr}\n`);window.location.href=`mailto:${cfg.email_to}?subject=${subject}&body=${body}`;}};td.appendChild(btn)}else{let v=row[c.key];if(c.format==='pct')v=((v??0)*100).toFixed(0)+'%';td.textContent=(v===undefined||v===null||v==='')?'—':v;if(c.align==='right')td.classList.add('right')}tr.appendChild(td)});tbody.appendChild(tr)});tableEl.innerHTML='';tableEl.appendChild(thead);tableEl.appendChild(tbody)}
+document.addEventListener('DOMContentLoaded',load);
+</script>
+</body></html>
