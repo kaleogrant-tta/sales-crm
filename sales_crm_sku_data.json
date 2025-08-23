@@ -1,1 +1,243 @@
-{"kpis":{"total_revenue":0,"total_units":0,"top20_sku_share_pct":0},"sku_top_revenue":[],"sku_bottom_revenue":[],"sku_sellthrough_top":[],"sku_sellthrough_bottom":[],"sku_most_units":[],"sku_least_units":[],"sku_movers_up":[],"sku_movers_down":[],"category_mix":[],"data_notes":{"period_start":null,"period_end":null}}
+{
+  "kpis": {
+    "total_revenue": 1326866.68,
+    "total_units": 38720,
+    "top20_sku_share_pct": 12.73
+  },
+  "sku_top_revenue": [
+    {
+      "product": "Ruby Classics Pre Roll Multi Pack White Widow 7pk",
+      "vendor": "Ruby",
+      "category": "Pre-Rolls",
+      "units": 279,
+      "revenue": 13845.0,
+      "pct_total": 1.04
+    },
+    {
+      "product": "Find Flower Slingria 28G",
+      "vendor": "Find.",
+      "category": "Flower",
+      "units": 90,
+      "revenue": 11086.49,
+      "pct_total": 0.84
+    },
+    {
+      "product": "Ruby Doobies Pre Roll Multi Pack Blue Dream 7pk",
+      "vendor": "Ruby",
+      "category": "Pre-Rolls",
+      "units": 276,
+      "revenue": 10115.67,
+      "pct_total": 0.76
+    }
+  ],
+  "sku_bottom_revenue": [
+    {
+      "product": "Ayrloom Disposable Cartridge Lychee Dream 1g",
+      "vendor": "Ayrloom",
+      "category": "Disposable",
+      "units": -1,
+      "revenue": -50.0,
+      "pct_total": -0.0
+    },
+    {
+      "product": "The Travel Agency Cooler",
+      "vendor": "The Travel Agency",
+      "category": "Accessories",
+      "units": 2,
+      "revenue": 0.0,
+      "pct_total": 0.0
+    },
+    {
+      "product": "Chime & Chill AM Bath Salts: CBD : CBG",
+      "vendor": "Chime & Chill",
+      "category": "CBD",
+      "units": 3,
+      "revenue": 0.0,
+      "pct_total": 0.0
+    }
+  ],
+  "sku_sellthrough_top": [
+    {
+      "product": "ONGROK Aluminum Multi-Hitter with Cooling Spiral | Rose Gold",
+      "vendor": "ONGROK",
+      "units_sold": 9,
+      "units_received": 10,
+      "sell_through": 0.9
+    },
+    {
+      "product": "GRAV Gandalf Amber",
+      "vendor": "GRAV",
+      "units_sold": 2,
+      "units_received": 3,
+      "sell_through": 0.67
+    },
+    {
+      "product": "AP Pre Roll Multi Pack Berry Limeade 6pk",
+      "vendor": "Alchemy Pure",
+      "units_sold": 13,
+      "units_received": 20,
+      "sell_through": 0.65
+    }
+  ],
+  "sku_sellthrough_bottom": [
+    {
+      "product": "Her Highness Pleasure Oil",
+      "vendor": "Her Highness",
+      "units_sold": 1,
+      "units_received": 72,
+      "sell_through": 0.01
+    },
+    {
+      "product": "Malachite Paper Cones",
+      "vendor": "Malachite",
+      "units_sold": 1,
+      "units_received": 45,
+      "sell_through": 0.02
+    },
+    {
+      "product": "HB Flower Hella Jelly 3.5g",
+      "vendor": "Harney Brothers Cannabis",
+      "units_sold": 49,
+      "units_received": 2128,
+      "sell_through": 0.02
+    }
+  ],
+  "sku_most_units": [
+    {
+      "product": "Nanticoke Pre Roll Single Sour Diesel .5g",
+      "vendor": "Nanticoke",
+      "category": "Pre-Rolls",
+      "units": 544,
+      "revenue": 4347.06,
+      "pct_total": 0.33
+    },
+    {
+      "product": "The Travel Agency Bic Lighter",
+      "vendor": "The Travel Agency",
+      "category": "Accessories",
+      "units": 522,
+      "revenue": 1425.45,
+      "pct_total": 0.11
+    },
+    {
+      "product": "TTA MK Lighter Jet Series",
+      "vendor": "MK Lighters",
+      "category": "Accessories",
+      "units": 469,
+      "revenue": 1687.6,
+      "pct_total": 0.13
+    }
+  ],
+  "sku_least_units": [
+    {
+      "product": "Ayrloom Disposable Cartridge Lychee Dream 1g",
+      "vendor": "Ayrloom",
+      "category": "Disposable",
+      "units": -1,
+      "revenue": -50.0,
+      "pct_total": -0.0
+    },
+    {
+      "product": "MJ Arsenal Atlas Mini Dab Rig | Iridescent",
+      "vendor": "MJ Arsenal",
+      "category": "Accessories",
+      "units": 1,
+      "revenue": 60.0,
+      "pct_total": 0.0
+    },
+    {
+      "product": "Butter Flower Madd Fruit 3.5 G",
+      "vendor": "butter",
+      "category": "Flower",
+      "units": 1,
+      "revenue": 48.0,
+      "pct_total": 0.0
+    }
+  ],
+  "sku_movers_up": [
+    {
+      "product": "&Shine Concentrate Creamiscle Sunset 2g",
+      "vendor": "GTI",
+      "W1": 0.0,
+      "W2": 675.0,
+      "W3": 600.0,
+      "W3_vs_W1": 1000000000.0
+    },
+    {
+      "product": "RG Flower Cotton Candy Gelato  3.5g",
+      "vendor": "Greener Standards INC",
+      "W1": 0.0,
+      "W2": 679.8,
+      "W3": 1553.2,
+      "W3_vs_W1": 1000000000.0
+    }
+  ],
+  "sku_movers_down": [
+    {
+      "product": "Puffco Heated Loading Tool | Hot Knife | Gemstoned Onyx",
+      "vendor": "Puff Co",
+      "W1": 45.0,
+      "W2": 0.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "FF Pre Roll Multi Pack Candy Jack 2.5g 5pk",
+      "vendor": "NYHO Labs",
+      "W1": 1976.0,
+      "W2": 600.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    }
+  ],
+  "category_mix": [
+    {
+      "category": "Flower",
+      "percentage": 0.3189
+    },
+    {
+      "category": "Pre-Rolls",
+      "percentage": 0.2199
+    },
+    {
+      "category": "Edibles",
+      "percentage": 0.1586
+    },
+    {
+      "category": "Disposable",
+      "percentage": 0.1555
+    },
+    {
+      "category": "Vape",
+      "percentage": 0.0866
+    },
+    {
+      "category": "Accessories",
+      "percentage": 0.0171
+    },
+    {
+      "category": "Concentrate",
+      "percentage": 0.0152
+    },
+    {
+      "category": "Beverages",
+      "percentage": 0.0145
+    },
+    {
+      "category": "Tincture",
+      "percentage": 0.0094
+    },
+    {
+      "category": "Topical",
+      "percentage": 0.0022
+    },
+    {
+      "category": "CBD",
+      "percentage": 0.0021
+    }
+  ],
+  "data_notes": {
+    "period_start": "2025-08-02",
+    "period_end": "2025-08-23"
+  }
+}
