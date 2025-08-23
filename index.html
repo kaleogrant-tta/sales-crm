@@ -68,9 +68,34 @@ tbody tr{transition:background .12s, transform .12s}tbody tr:hover{background:rg
 button.btn{background:var(--mint);color:var(--coffee);padding:4px 10px;border:none;border-radius:8px;cursor:pointer;font-weight:600;transition:background .15s}
 button.btn:hover{background:rgba(0,207,207,0.8)}
 button.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* Filter bar for category toggle */
+.filter-bar{
+  margin:16px 0;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.filter-label{
+  font-weight:600;
+  color:var(--coffee);
+}
+.filter-select{
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid rgba(60,42,33,.25);
+  background:rgba(255,255,255,0.8);
+  color:var(--coffee);
+  font-weight:600;
+}
+.filter-select:focus{
+  outline:none;
+  box-shadow:0 0 0 2px rgba(230,88,44,.3);
+}
 </style></head>
 <body>
-<div class='header'><div class='container'><h1>3-Week Sales CRM</h1><div class='muted'>Cream • Coral • Mint — inspired by The Travel Agency</div></div></div>
+<div class='header'><div class='container'><h1>3-Week Sales CRM</h1></div></div>
 <div class='container'>
   <div class='kpis'>
     <div class='card'><div class='muted'>Total Revenue</div><div id='kpi-rev' class='metric'>—</div></div>
@@ -78,7 +103,13 @@ button.btn:disabled{opacity:.5;cursor:not-allowed}
     <div class='card'><div class='muted'>Top 20 SKU Share</div><div id='kpi-share' class='metric'>—</div></div>
   </div>
 
-  <div class='section-title'>Movers — Top 2 Growers & Top 2 Shrinkers</div>
+  <!-- Category filter toggle to view performance by cannabis category -->
+  <div class='filter-bar'>
+    <label for="category-filter" class="filter-label">Category:</label>
+    <select id="category-filter" class="filter-select"></select>
+  </div>
+
+  <div class='section-title'>Movers — Top 10 Growers & Top 10 Shrinkers</div>
   <div class='two-col'>
     <div class='card'><div class='chip up'>▲ Top Growers</div><table id='movers-growers'></table></div>
     <div class='card'><div class='chip down'>▼ Top Shrinkers</div><table id='movers-shrinkers'></table></div>
@@ -127,17 +158,7 @@ async function load(){
     {key:'W3',label:'W3',format:'currency',align:'right'},
     {key:'W3_vs_W1',label:'W3 vs W1',format:'pct',align:'right'}
   ];
-  table(
-    document.getElementById('movers-growers'),
-    pickTopN(DATA.sku_movers_up,'W3_vs_W1',2,false),
-    moverCols
-  );
-  table(
-    document.getElementById('movers-shrinkers'),
-    pickTopN(DATA.sku_movers_down,'W3_vs_W1',2,true),
-    moverCols
-  );
-
+  // Columns definitions for each table
   const revCols=[
     {key:'product',label:'Product'},
     {key:'vendor',label:'Vendor'},
@@ -146,9 +167,6 @@ async function load(){
     {key:'revenue',label:'Revenue',format:'currency',align:'right'},
     {key:'pct_total',label:'% of Total',format:'pct',align:'right'}
   ];
-  table(document.getElementById('top-sellers'), (DATA.sku_top_revenue||[]).slice(0,25), revCols);
-  table(document.getElementById('bottom-sellers'), (DATA.sku_bottom_revenue||[]).slice(0,25), revCols);
-
   const stCols=[
     {key:'product',label:'Product'},
     {key:'vendor',label:'Vendor'},
@@ -156,17 +174,6 @@ async function load(){
     {key:'units_received',label:'Received',format:'int',align:'right'},
     {key:'sell_through',label:'Sell-Through',format:'pct',align:'right'}
   ];
-  table(
-    document.getElementById('sell-top'),
-    (DATA.sku_sellthrough_top||[]).slice(0,25),
-    stCols
-  );
-  table(
-    document.getElementById('sell-bottom'),
-    (DATA.sku_sellthrough_bottom||[]).slice(0,25),
-    stCols
-  );
-
   const unitCols=[
     {key:'product',label:'Product'},
     {key:'vendor',label:'Vendor'},
@@ -174,16 +181,78 @@ async function load(){
     {key:'units',label:'Units',format:'int',align:'right'},
     {key:'revenue',label:'Revenue',format:'currency',align:'right'}
   ];
-  table(
-    document.getElementById('most-units'),
-    (DATA.sku_most_units||[]).slice(0,25),
-    unitCols
-  );
-  table(
-    document.getElementById('least-units'),
-    (DATA.sku_least_units||[]).slice(0,25),
-    unitCols
-  );
+  // Populate category filter options
+  const selectEl = document.getElementById('category-filter');
+  if(selectEl){
+    // gather categories from all relevant arrays
+    const allItems = [];
+    ['sku_top_revenue','sku_bottom_revenue','sku_most_units','sku_least_units','sku_sellthrough_top','sku_sellthrough_bottom','sku_movers_up','sku_movers_down'].forEach(key=>{
+      const arr = DATA[key] || [];
+      arr.forEach(item => { if(item && item.category) allItems.push(item.category); });
+    });
+    const cats = Array.from(new Set(allItems)).sort();
+    cats.unshift('All');
+    // Clear existing options
+    selectEl.innerHTML='';
+    cats.forEach(cat => { const opt=document.createElement('option'); opt.value=cat; opt.textContent=cat; selectEl.appendChild(opt); });
+    selectEl.addEventListener('change', updateTables);
+  }
+
+  // Function to filter arrays by selected category and update all tables
+  function updateTables(){
+    const selected = selectEl ? selectEl.value : 'All';
+    const filterCategory = arr => {
+      if(!arr) return [];
+      if(!selected || selected==='All') return [...arr];
+      return arr.filter(item => item && item.category === selected);
+    };
+    // Movers: show top 10 growers and shrinkers
+    table(
+      document.getElementById('movers-growers'),
+      pickTopN(filterCategory(DATA.sku_movers_up),'W3_vs_W1',10,false),
+      moverCols
+    );
+    table(
+      document.getElementById('movers-shrinkers'),
+      pickTopN(filterCategory(DATA.sku_movers_down),'W3_vs_W1',10,true),
+      moverCols
+    );
+    // Top & bottom sellers
+    table(
+      document.getElementById('top-sellers'),
+      filterCategory(DATA.sku_top_revenue).slice(0,25),
+      revCols
+    );
+    table(
+      document.getElementById('bottom-sellers'),
+      filterCategory(DATA.sku_bottom_revenue).slice(0,25),
+      revCols
+    );
+    // Sell-through
+    table(
+      document.getElementById('sell-top'),
+      filterCategory(DATA.sku_sellthrough_top).slice(0,25),
+      stCols
+    );
+    table(
+      document.getElementById('sell-bottom'),
+      filterCategory(DATA.sku_sellthrough_bottom).slice(0,25),
+      stCols
+    );
+    // Most & least sold units
+    table(
+      document.getElementById('most-units'),
+      filterCategory(DATA.sku_most_units).slice(0,25),
+      unitCols
+    );
+    table(
+      document.getElementById('least-units'),
+      filterCategory(DATA.sku_least_units).slice(0,25),
+      unitCols
+    );
+  }
+  // Initial table rendering
+  updateTables();
 
   loadLoyalty();
 }

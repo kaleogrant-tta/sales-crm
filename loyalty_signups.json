@@ -1,5 +1,104 @@
 [
-  {"date":"2025-08-14","budtender":"Ava","customer_id":"anon-001","store":"Main"},
-  {"date":"2025-08-15","budtender":"Ben","customer_id":"anon-002","store":"Main"},
-  {"date":"2025-08-16","budtender":"Cara","customer_id":"anon-003","store":"Downtown"}
+  {
+    "date": "2025-08-02",
+    "budtender": "George A",
+    "customer_id": "2874324",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-03",
+    "budtender": "Milton R",
+    "customer_id": "2878178",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-04",
+    "budtender": "Amir C",
+    "customer_id": "2879051",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-04",
+    "budtender": "Gabriel R",
+    "customer_id": "2879156",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-05",
+    "budtender": "Milton R",
+    "customer_id": "2881201",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-10",
+    "budtender": "Anthony B",
+    "customer_id": "2895912",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-12",
+    "budtender": "Omari P",
+    "customer_id": "2901180",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-12",
+    "budtender": "Sam F",
+    "customer_id": "2901585",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-13",
+    "budtender": "George A",
+    "customer_id": "2903566",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-13",
+    "budtender": "Rashae B",
+    "customer_id": "2903715",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-16",
+    "budtender": "Colbi K",
+    "customer_id": "2911589",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-18",
+    "budtender": "Gabriel R",
+    "customer_id": "2916887",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-19",
+    "budtender": "Taz L",
+    "customer_id": "2920464",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-20",
+    "budtender": "Alex S",
+    "customer_id": "2920826",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-20",
+    "budtender": "George A",
+    "customer_id": "2921396",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-22",
+    "budtender": "George A",
+    "customer_id": "2927420",
+    "store": "The Travel Agency Downtown Brooklyn"
+  },
+  {
+    "date": "2025-08-22",
+    "budtender": "George A",
+    "customer_id": "2928592",
+    "store": "The Travel Agency Downtown Brooklyn"
+  }
 ]
