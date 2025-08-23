@@ -93,6 +93,14 @@ button.btn:disabled{opacity:.5;cursor:not-allowed}
   outline:none;
   box-shadow:0 0 0 2px rgba(230,88,44,.3);
 }
+
+/* Summary section styles */
+.summary-section{margin-top:28px;}
+.summary-item{margin-bottom:12px;}
+.summary-toggle{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:12px 16px;background:linear-gradient(180deg,var(--glass),rgba(255,255,255,.03));border:1px solid rgba(60,42,33,.15);border-radius:16px;font-weight:700;}
+.summary-toggle .arrow{transition:transform .3s ease;}
+.summary-content{overflow:hidden;max-height:0;transition:max-height .4s ease;padding:0 16px;background:rgba(255,255,255,.02);border:1px solid rgba(60,42,33,.1);border-top:none;border-radius:0 0 16px 16px;}
+.summary-content.expanded{max-height:800px;padding:16px;}
 </style></head>
 <body>
 <div class='header'><div class='container'><h1>3-Week Sales CRM</h1></div></div>
@@ -132,6 +140,25 @@ button.btn:disabled{opacity:.5;cursor:not-allowed}
     <div class='muted'>Counts show the current 3-week window. Threshold: <span id="ff-threshold">10</span>.</div>
     <table id='loyalty-table'></table>
     <div class='muted' style='margin-top:8px'>Click <b>Redeem</b> when a budtender crosses a multiple of the threshold; this will notify the manager by email.</div>
+  </div>
+
+  <!-- Summary & Insights Section -->
+  <div class='section-title'>Summary & Insights</div>
+  <div class='summary-section'>
+    <div class='summary-item'>
+      <div class='summary-toggle' data-target='summary-data'>
+        <h3 style='margin:0;font-size:16px;font-weight:700;'>Data Summary</h3>
+        <span class='arrow'>▼</span>
+      </div>
+      <div id='summary-data' class='summary-content'></div>
+    </div>
+    <div class='summary-item'>
+      <div class='summary-toggle' data-target='summary-solutions'>
+        <h3 style='margin:0;font-size:16px;font-weight:700;'>Solutions &amp; Challenges</h3>
+        <span class='arrow'>▼</span>
+      </div>
+      <div id='summary-solutions' class='summary-content'></div>
+    </div>
   </div>
 </div>
 
@@ -254,7 +281,9 @@ async function load(){
   // Initial table rendering
   updateTables();
 
-  loadLoyalty();
+  // Load loyalty signups and then summary
+  await loadLoyalty();
+  loadSummary();
 }
 async function loadLoyalty(){
   let cfg={threshold:10,email_to:"",email_subject:"Redeem",email_from:""};
@@ -262,6 +291,8 @@ async function loadLoyalty(){
   const thr = cfg.threshold??10;
   document.getElementById('ff-threshold').textContent=thr;
   let rows=[];try{const r=await fetch('loyalty_signups.json');if(r.ok)rows=await r.json()}catch(e){}
+  // expose loyalty signups for summary calculations
+  window.LOYALTY_ROWS = rows;
   const today=new Date();const fallbackStart=new Date(today.getTime()-21*86400000);let start=fallbackStart,end=today;
   if(window.DATA&&window.DATA.data_notes){if(window.DATA.data_notes.period_start)start=new Date(window.DATA.data_notes.period_start+"T00:00:00");if(window.DATA.data_notes.period_end)end=new Date(window.DATA.data_notes.period_end+"T23:59:59")}
   const inWindow=rows.filter(r=>{const d=new Date((r.date||'')+'T00:00:00');return !isNaN(d)&&d>=start&&d<=end});
@@ -270,5 +301,69 @@ async function loadLoyalty(){
   const cols=[{key:'budtender',label:'Budtender'},{key:'store',label:'Store'},{key:'count',label:'Frequent Flyers',align:'right'},{key:'next_at',label:'Next at',align:'right'},{key:'progress_pct',label:'Progress',align:'right',format:'pct'},{key:'__action',label:'Action'}];
   const tableEl=document.getElementById('loyalty-table');const thead=document.createElement('thead');const trh=document.createElement('tr');cols.forEach(c=>{const th=document.createElement('th');th.textContent=c.label;trh.appendChild(th)});thead.appendChild(trh);const tbody=document.createElement('tbody');data.forEach(row=>{const tr=document.createElement('tr');cols.forEach(c=>{const td=document.createElement('td');if(c.key==='__action'){const btn=document.createElement('button');btn.textContent=row.canRedeem?'Redeem':'—';btn.disabled=!row.canRedeem;btn.className='btn';btn.onclick=async()=>{try{const resp=await fetch('/.netlify/functions/redeem-email',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({budtender:row.budtender,store:row.store,count:row.count,threshold:thr,to:cfg.email_to,subject:cfg.email_subject})});if(!resp.ok)throw new Error('function failed');alert('Redeem request sent.')}catch(e){const subject=encodeURIComponent((cfg.email_subject||'Redeem')+' - '+row.budtender);const body=encodeURIComponent(`Budtender: ${row.budtender}\nStore: ${row.store}\nFrequent Flyers: ${row.count}\nThreshold: ${thr}\n`);window.location.href=`mailto:${cfg.email_to}?subject=${subject}&body=${body}`;}};td.appendChild(btn)}else{let v=row[c.key];if(c.format==='pct')v=((v??0)*100).toFixed(0)+'%';td.textContent=(v===undefined||v===null||v==='')?'—':v;if(c.align==='right')td.classList.add('right')}tr.appendChild(td)});tbody.appendChild(tr)});tableEl.innerHTML='';tableEl.appendChild(thead);tableEl.appendChild(tbody)}
 document.addEventListener('DOMContentLoaded',load);
+
+// Compose summary and populate the Summary & Insights section
+function loadSummary(){
+  const DATA = window.DATA || {};
+  // Build summary for categories
+  const cats = (DATA.category_mix || []).slice();
+  // Sort by percentage descending for top and ascending for bottom
+  cats.sort((a,b)=>b.percentage - a.percentage);
+  const topCats = cats.slice(0,3).map(c => `${c.category} (${fmtPct(c.percentage)})`);
+  const bottomCats = cats.slice(-3).map(c => `${c.category} (${fmtPct(c.percentage)})`);
+  // Frequent Flyer summary
+  let dataHtml = '';
+  dataHtml += `<p><b>Top Categories:</b> ${topCats.join(', ') || '—'}</p>`;
+  dataHtml += `<p><b>Bottom Categories:</b> ${bottomCats.join(', ') || '—'}</p>`;
+  // KPIs summary
+  dataHtml += `<p><b>Total Revenue:</b> ${fmtCurrency(DATA.kpis?.total_revenue)} • <b>Total Units:</b> ${fmtInt(DATA.kpis?.total_units)}</p>`;
+  // Frequent Flyers summary by budtender
+  if(Array.isArray(window.LOYALTY_ROWS) && window.LOYALTY_ROWS.length){
+    const m = new Map();
+    window.LOYALTY_ROWS.forEach(r => {
+      const key = r.budtender || 'Unknown';
+      m.set(key, (m.get(key) || 0) + 1);
+    });
+    const sorted = Array.from(m.entries()).sort((a,b) => b[1] - a[1]);
+    dataHtml += '<p><b>Top Budtenders by Frequent Flyers:</b></p><ul style="margin:4px 0 12px 16px;">';
+    sorted.slice(0,5).forEach(([name,count]) => {
+      dataHtml += `<li>${name} – ${count} signups</li>`;
+    });
+    dataHtml += '</ul>';
+  }
+  document.getElementById('summary-data').innerHTML = dataHtml;
+  // Solutions and challenges
+  const solutions = [
+    'Implemented interactive dashboards with category filtering and expanded mover lists.',
+    'Integrated Frequent Flyer program analytics to track budtender performance.',
+    'Designed a responsive interface for desktop and mobile devices with an updated color palette.',
+    'Added horizontal scrolling and smooth transitions for tables and summary sections.'
+  ];
+  const challenges = [
+    'Mapping disparate data sources to a unified schema and fixing mismatched keys between JSON and HTML.',
+    'Working around size limits when uploading large JSON data to GitHub via the web interface.',
+    'Balancing aesthetics and readability while making the dashboard responsive.',
+    'Waiting for GitHub Pages deployments after each update to reflect changes on the live site.'
+  ];
+  let solHtml = '<p><b>Solutions Implemented:</b></p><ul style="margin:4px 0 12px 16px;">';
+  solutions.forEach(item => { solHtml += `<li>${item}</li>`; });
+  solHtml += '</ul><p><b>Challenges Encountered:</b></p><ul style="margin:4px 0 12px 16px;">';
+  challenges.forEach(item => { solHtml += `<li>${item}</li>`; });
+  solHtml += '</ul>';
+  document.getElementById('summary-solutions').innerHTML = solHtml;
+  // Toggle behavior
+  document.querySelectorAll('.summary-toggle').forEach(tog => {
+    const targetId = tog.getAttribute('data-target');
+    const target = document.getElementById(targetId);
+    const arrow = tog.querySelector('.arrow');
+    // ensure collapsed state initially
+    target.classList.remove('expanded');
+    arrow.style.transform = 'rotate(0deg)';
+    tog.onclick = () => {
+      const expanded = target.classList.toggle('expanded');
+      arrow.style.transform = expanded ? 'rotate(180deg)' : 'rotate(0deg)';
+    };
+  });
+}
 </script>
 </body></html>
