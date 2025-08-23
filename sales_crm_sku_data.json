@@ -2,7 +2,7 @@
   "kpis": {
     "total_revenue": 1326866.68,
     "total_units": 38720,
-    "top20_sku_share_pct": 12.73
+    "top20_sku_share_pct": 0.1273
   },
   "sku_top_revenue": [
     {
@@ -161,7 +161,7 @@
       "W1": 0.0,
       "W2": 675.0,
       "W3": 600.0,
-      "W3_vs_W1": 1000000000.0
+      "W3_vs_W1": 1
     },
     {
       "product": "RG Flower Cotton Candy Gelato  3.5g",
@@ -169,7 +169,7 @@
       "W1": 0.0,
       "W2": 679.8,
       "W3": 1553.2,
-      "W3_vs_W1": 1000000000.0
+      "W3_vs_W1": 1
     }
   ],
   "sku_movers_down": [
