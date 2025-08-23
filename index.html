@@ -166,7 +166,45 @@ button.btn:disabled{opacity:.5;cursor:not-allowed}
 const fmtCurrency=n=>(n??0).toLocaleString(undefined,{style:'currency',currency:'USD',maximumFractionDigits:0});
 const fmtInt=n=>(n??0).toLocaleString(undefined,{maximumFractionDigits:0});
 const fmtPct=n=>((n??0)*100).toLocaleString(undefined,{maximumFractionDigits:1})+'%';
-function table(el,rows,cols){const thead=document.createElement('thead');const trh=document.createElement('tr');cols.forEach(c=>{const th=document.createElement('th');th.textContent=c.label;trh.appendChild(th)});thead.appendChild(trh);const tbody=document.createElement('tbody');rows.forEach(r=>{const tr=document.createElement('tr');cols.forEach(c=>{const td=document.createElement('td');let v=r[c.key];if(c.format==='currency')v=fmtCurrency(v);if(c.format==='int')v=fmtInt(v);if(c.format==='pct')v=fmtPct(v);td.textContent=(v===undefined||v===null||v==='')?'—':v;if(c.align==='right')td.classList.add('right');tr.appendChild(td)});tbody.appendChild(tr)});el.innerHTML='';el.appendChild(thead);el.appendChild(tbody)}
+function table(el,rows,cols){
+  const thead=document.createElement('thead');
+  const trh=document.createElement('tr');
+  cols.forEach(c=>{
+    const th=document.createElement('th');
+    th.textContent=c.label;
+    trh.appendChild(th);
+  });
+  thead.appendChild(trh);
+  const tbody=document.createElement('tbody');
+  if(Array.isArray(rows) && rows.length>0){
+    rows.forEach(r=>{
+      const tr=document.createElement('tr');
+      cols.forEach(c=>{
+        const td=document.createElement('td');
+        let v=r[c.key];
+        if(c.format==='currency') v=fmtCurrency(v);
+        if(c.format==='int') v=fmtInt(v);
+        if(c.format==='pct') v=fmtPct(v);
+        td.textContent=(v===undefined||v===null||v==='') ? '—' : v;
+        if(c.align==='right') td.classList.add('right');
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  } else {
+    // Show a placeholder row when no data is available
+    const tr=document.createElement('tr');
+    const td=document.createElement('td');
+    td.textContent='No data';
+    td.colSpan=cols.length;
+    td.style.textAlign='center';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+  el.innerHTML='';
+  el.appendChild(thead);
+  el.appendChild(tbody);
+}
 function pickTopN(arr,key,n,asc=false){const copy=[...(arr||[])].filter(x=>x&&x[key]!==null&&x[key]!==undefined);copy.sort((a,b)=>asc?(a[key]-b[key]):(b[key]-a[key]));return copy.slice(0,n)}
 async function load(){
   let DATA=null;
