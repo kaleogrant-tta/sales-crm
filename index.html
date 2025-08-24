@@ -31,7 +31,8 @@ html,body{
   padding: 16px 0 8px;
 }
 h1{margin:0 0 8px 0;font-weight:800;letter-spacing:.5px;text-shadow:0 2px 12px rgba(230,88,44,.2)}
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:8px 0 20px}
+  /* KPIs grid: auto-fit ensures cards wrap nicely when more items are added */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:8px 0 20px}
 .card{background:linear-gradient(180deg,var(--glass),rgba(255,255,255,.03));border:1px solid rgba(60,42,33,.15);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .15s,box-shadow .15s,border-color .15s}
 .card:hover{transform:translateY(-2px);box-shadow:0 16px 42px rgba(60,42,33,.12);border-color:rgba(230,88,44,.45)}
 .metric{font-size:28px;font-weight:800;margin-top:4px;letter-spacing:.3px}
@@ -109,6 +110,9 @@ button.btn:disabled{opacity:.5;cursor:not-allowed}
     <div class='card'><div class='muted'>Total Revenue</div><div id='kpi-rev' class='metric'>—</div></div>
     <div class='card'><div class='muted'>Total Units</div><div id='kpi-units' class='metric'>—</div></div>
     <div class='card'><div class='muted'>Top 20 SKU Share</div><div id='kpi-share' class='metric'>—</div></div>
+    <!-- Previous week (last 7 days) summary cards -->
+    <div class='card'><div class='muted'>Prev 7d Revenue</div><div id='kpi-prev-rev' class='metric'>—</div></div>
+    <div class='card'><div class='muted'>Prev 7d Units</div><div id='kpi-prev-units' class='metric'>—</div></div>
   </div>
 
   <!-- Category filter toggle to view performance by cannabis category -->
@@ -214,6 +218,12 @@ async function load(){
   document.getElementById('kpi-rev').textContent=fmtCurrency(DATA.kpis?.total_revenue);
   document.getElementById('kpi-units').textContent=fmtInt(DATA.kpis?.total_units);
   document.getElementById('kpi-share').textContent=fmtPct(DATA.kpis?.top20_sku_share_pct);
+
+  // Populate previous week (last 7 days) summary if available
+  if (DATA.prev_week) {
+    document.getElementById('kpi-prev-rev').textContent = fmtCurrency(DATA.prev_week.total_revenue);
+    document.getElementById('kpi-prev-units').textContent = fmtInt(DATA.prev_week.total_units);
+  }
 
   const moverCols=[
     {key:'product',label:'Product'},
