@@ -381,27 +381,22 @@ function loadSummary(){
     dataHtml += '</ul>';
   }
   document.getElementById('summary-data').innerHTML = dataHtml;
-  // Solutions and challenges
+  // Strengths and challenges derived from the sales data
   const solutions = [
-    // Highlight key enhancements to keep the dashboard engaging and easy to use
-    'Implemented interactive dashboards with category filtering and expanded mover lists to top‑10.',
-    'Integrated Frequent Flyer program analytics to track budtender performance and threshold milestones.',
-    'Designed a responsive interface for desktop and mobile devices with an updated cream‑coral‑mint palette.',
-    'Added horizontal scrolling, smooth transitions, and collapsible summary panels to keep the experience fluid.'
-    ,'Ensured movers lists always display ten products by using dataset-wide sorting when category filters return few items.'
+    'Strong revenue concentration in Flower and Pre‑Roll categories (over half of total sales).',
+    'Top sellers like Ruby Classics Pre Roll Multi Pack White Widow 7pk and Find Flower Slingria 28G drive significant revenue and unit volume.',
+    'High sell‑through ratios on select accessories and pre‑rolls (e.g., ONGROK Aluminum Multi‑Hitter) indicate efficient inventory management.',
+    'Healthy Frequent Flyer participation, with leading budtenders securing multiple sign‑ups during the three‑week period.'
   ];
   const challenges = [
-    // Document technical and process hurdles encountered while building the CRM
-    'Mapping disparate data sources to a unified schema and fixing mismatched keys between JSON and HTML.',
-    'Adding category information to the movers data and clamping extreme growth/shrink ratios to maintain readability.',
-    'Working around size limits when uploading large JSON data to GitHub via the web interface.',
-    'Balancing aesthetics and readability while making the dashboard responsive on small screens.',
-    'Waiting for GitHub Pages deployments after each update to reflect changes on the live site.'
-    ,'Handling categories with very few products, which resulted in empty or small mover lists in early iterations.'
+    'Several accessories and infused pre‑rolls exhibit steep declines (>80% drop in revenue) despite being stocked, suggesting waning customer interest.',
+    'Underperforming segments like CBD, Topical, and Tincture categories show minimal revenue share.',
+    'Low sell‑through items such as Her Highness Pleasure Oil and HB Flower Hella Jelly point to over‑stocking or poor demand.',
+    'Maintaining inventory for high‑growth movers is critical to avoid stock‑outs and missed revenue opportunities.'
   ];
-  let solHtml = '<p><b>Solutions Implemented:</b></p><ul style="margin:4px 0 12px 16px;">';
+  let solHtml = '<p><b>Strengths:</b></p><ul style="margin:4px 0 12px 16px;">';
   solutions.forEach(item => { solHtml += `<li>${item}</li>`; });
-  solHtml += '</ul><p><b>Challenges Encountered:</b></p><ul style="margin:4px 0 12px 16px;">';
+  solHtml += '</ul><p><b>Challenges:</b></p><ul style="margin:4px 0 12px 16px;">';
   challenges.forEach(item => { solHtml += `<li>${item}</li>`; });
   solHtml += '</ul>';
   document.getElementById('summary-solutions').innerHTML = solHtml;
