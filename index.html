@@ -271,15 +271,16 @@ async function load(){
       if(!selected || selected==='All') return [...arr];
       return arr.filter(item => item && item.category === selected);
     };
-    // Movers: show top 10 growers and shrinkers
+    // Movers: always show the top 10 growers and shrinkers across the entire dataset
+    // Regardless of the selected category, the movers section highlights overall performance trends.
     table(
       document.getElementById('movers-growers'),
-      pickTopN(filterCategory(DATA.sku_movers_up),'W3_vs_W1',10,false),
+      pickTopN(DATA.sku_movers_up,'W3_vs_W1',10,false),
       moverCols
     );
     table(
       document.getElementById('movers-shrinkers'),
-      pickTopN(filterCategory(DATA.sku_movers_down),'W3_vs_W1',10,true),
+      pickTopN(DATA.sku_movers_down,'W3_vs_W1',10,true),
       moverCols
     );
     // Top & bottom sellers
@@ -372,16 +373,21 @@ function loadSummary(){
   document.getElementById('summary-data').innerHTML = dataHtml;
   // Solutions and challenges
   const solutions = [
-    'Implemented interactive dashboards with category filtering and expanded mover lists.',
-    'Integrated Frequent Flyer program analytics to track budtender performance.',
-    'Designed a responsive interface for desktop and mobile devices with an updated color palette.',
-    'Added horizontal scrolling and smooth transitions for tables and summary sections.'
+    // Highlight key enhancements to keep the dashboard engaging and easy to use
+    'Implemented interactive dashboards with category filtering and expanded mover lists to top‑10.',
+    'Integrated Frequent Flyer program analytics to track budtender performance and threshold milestones.',
+    'Designed a responsive interface for desktop and mobile devices with an updated cream‑coral‑mint palette.',
+    'Added horizontal scrolling, smooth transitions, and collapsible summary panels to keep the experience fluid.'
+    ,'Ensured movers lists always display ten products by using dataset-wide sorting when category filters return few items.'
   ];
   const challenges = [
+    // Document technical and process hurdles encountered while building the CRM
     'Mapping disparate data sources to a unified schema and fixing mismatched keys between JSON and HTML.',
+    'Adding category information to the movers data and clamping extreme growth/shrink ratios to maintain readability.',
     'Working around size limits when uploading large JSON data to GitHub via the web interface.',
-    'Balancing aesthetics and readability while making the dashboard responsive.',
+    'Balancing aesthetics and readability while making the dashboard responsive on small screens.',
     'Waiting for GitHub Pages deployments after each update to reflect changes on the live site.'
+    ,'Handling categories with very few products, which resulted in empty or small mover lists in early iterations.'
   ];
   let solHtml = '<p><b>Solutions Implemented:</b></p><ul style="margin:4px 0 12px 16px;">';
   solutions.forEach(item => { solHtml += `<li>${item}</li>`; });
