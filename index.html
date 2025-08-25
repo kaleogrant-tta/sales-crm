@@ -251,10 +251,12 @@ async function load(){
     {key:'revenue',label:'Revenue',format:'currency',align:'right'},
     {key:'pct_total',label:'% of Total',format:'pct',align:'right'}
   ];
+  // Sell-through table columns use `units` from the JSON (not `units_sold`).
+  // Each row shows the product, vendor, units sold, units received and sell-through percentage.
   const stCols=[
     {key:'product',label:'Product'},
     {key:'vendor',label:'Vendor'},
-    {key:'units_sold',label:'Units',format:'int',align:'right'},
+    {key:'units',label:'Units',format:'int',align:'right'},
     {key:'units_received',label:'Received',format:'int',align:'right'},
     {key:'sell_through',label:'Sell-Through',format:'pct',align:'right'}
   ];
