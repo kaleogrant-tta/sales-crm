@@ -363,8 +363,11 @@ document.addEventListener('DOMContentLoaded',load);
 // Compose summary and populate the Summary & Insights section
 function loadSummary(){
   const DATA = window.DATA || {};
-  // Build summary for categories
-  const cats = (DATA.category_mix || []).slice();
+  // Build summary for categories. Use previous week mix if available, otherwise fall back to full-period mix
+  const catsSrc = (Array.isArray(DATA.category_mix_prev_week) && DATA.category_mix_prev_week.length)
+    ? DATA.category_mix_prev_week
+    : (DATA.category_mix || []);
+  const cats = catsSrc.slice();
   // Sort by percentage descending for top and ascending for bottom
   cats.sort((a,b)=>b.percentage - a.percentage);
   const topCats = cats.slice(0,3).map(c => `${c.category} (${fmtPct(c.percentage)})`);
@@ -373,21 +376,42 @@ function loadSummary(){
   let dataHtml = '';
   dataHtml += `<p><b>Top Categories:</b> ${topCats.join(', ') || '—'}</p>`;
   dataHtml += `<p><b>Bottom Categories:</b> ${bottomCats.join(', ') || '—'}</p>`;
-  // KPIs summary
-  dataHtml += `<p><b>Total Revenue:</b> ${fmtCurrency(DATA.kpis?.total_revenue)} • <b>Total Units:</b> ${fmtInt(DATA.kpis?.total_units)}</p>`;
-  // Frequent Flyers summary by budtender
+  // KPIs summary – prefer previous 7‑day totals when present.  If the
+  // JSON includes kpis.prev_week_revenue and kpis.prev_week_units these
+  // values will be used to populate the summary so the cards reflect the
+  // most recent week of performance.  Otherwise fall back to the
+  // overall period totals.
+  const prevRev = DATA.kpis?.prev_week_revenue ?? null;
+  const prevUnits = DATA.kpis?.prev_week_units ?? null;
+  if(prevRev !== null && prevUnits !== null){
+    dataHtml += `<p><b>Total Revenue (Prev 7d):</b> ${fmtCurrency(prevRev)} • <b>Total Units (Prev 7d):</b> ${fmtInt(prevUnits)}</p>`;
+  } else {
+    dataHtml += `<p><b>Total Revenue:</b> ${fmtCurrency(DATA.kpis?.total_revenue)} • <b>Total Units:</b> ${fmtInt(DATA.kpis?.total_units)}</p>`;
+  }
+  // Frequent Flyers summary by budtender for the previous 7-day window
   if(Array.isArray(window.LOYALTY_ROWS) && window.LOYALTY_ROWS.length){
+    // Determine the 7-day window based on the period_end in data notes
+    let end = new Date();
+    if(DATA.data_notes && DATA.data_notes.period_end){
+      end = new Date(DATA.data_notes.period_end + 'T23:59:59');
+    }
+    const prevStart = new Date(end.getTime() - 6*86400000);
     const m = new Map();
     window.LOYALTY_ROWS.forEach(r => {
-      const key = r.budtender || 'Unknown';
-      m.set(key, (m.get(key) || 0) + 1);
+      const d = new Date((r.date || '') + 'T00:00:00');
+      if(!isNaN(d) && d >= prevStart && d <= end){
+        const key = r.budtender || 'Unknown';
+        m.set(key, (m.get(key) || 0) + 1);
+      }
     });
-    const sorted = Array.from(m.entries()).sort((a,b) => b[1] - a[1]);
-    dataHtml += '<p><b>Top Budtenders by Frequent Flyers:</b></p><ul style="margin:4px 0 12px 16px;">';
-    sorted.slice(0,5).forEach(([name,count]) => {
-      dataHtml += `<li>${name} – ${count} signups</li>`;
-    });
-    dataHtml += '</ul>';
+    if(m.size){
+      const sorted = Array.from(m.entries()).sort((a,b) => b[1] - a[1]);
+      dataHtml += '<p><b>Top Budtenders by Frequent Flyers (Prev 7d):</b></p><ul style="margin:4px 0 12px 16px;">';
+      sorted.slice(0,5).forEach(([name,count]) => {
+        dataHtml += `<li>${name} – ${count} signups</li>`;
+      });
+      dataHtml += '</ul>';
+    }
   }
   document.getElementById('summary-data').innerHTML = dataHtml;
   // Strengths and challenges derived from the sales data
