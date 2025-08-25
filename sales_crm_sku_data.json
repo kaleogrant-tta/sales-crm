@@ -464,186 +464,186 @@
   ],
   "sku_movers_up": [
     {
-      "product": "MFNY Badder Hash Burger 1g",
-      "vendor": "MFNY",
-      "category": "Concentrate",
-      "W1": 0.01,
-      "W2": 253.52,
-      "W3": 373.75,
-      "W3_vs_W1": 37374.0
-    },
-    {
-      "product": "Flintts Mints Mint",
-      "vendor": "Flintts Mints",
-      "category": "Accessories",
-      "W1": 0.02,
-      "W2": 8.03,
-      "W3": 8.06,
-      "W3_vs_W1": 402.00000000000006
-    },
-    {
-      "product": "HVH Pre Roll Farmer's Blend Single",
-      "vendor": "Hudson Cannabis",
+      "product": "Dank Pre Roll Blunt Strawberry Lemonade 1.25g",
+      "vendor": "dank. by definition",
       "category": "Pre-Rolls",
-      "W1": 8.0,
-      "W2": 280.0,
-      "W3": 431.2,
-      "W3_vs_W1": 52.9
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 759.9,
+      "W3_vs_W1": 2.0
     },
     {
-      "product": "Rythm Flower Brownie Scout  28g",
-      "vendor": "Rythm",
-      "category": "Flower",
-      "W1": 198.0,
-      "W2": 3828.0,
-      "W3": 2684.0,
-      "W3_vs_W1": 12.555555555555555
-    },
-    {
-      "product": "RAW Classic - 1 1/4 | 50 pk",
-      "vendor": "RAW",
-      "category": "Accessories",
-      "W1": 3.0,
-      "W2": 31.6,
-      "W3": 35.7,
-      "W3_vs_W1": 10.9
-    },
-    {
-      "product": "Turn Disposable UP Lemonade Stand 1G",
-      "vendor": "turn",
-      "category": "Disposable",
-      "W1": 60.0,
-      "W2": 654.0,
-      "W3": 654.0,
-      "W3_vs_W1": 9.9
-    },
-    {
-      "product": "HVH Live Rosin Juicy Diesel 1G",
-      "vendor": "Hudson Cannabis",
-      "category": "Concentrate",
-      "W1": 49.5,
-      "W2": 191.4,
-      "W3": 389.4,
-      "W3_vs_W1": 6.866666666666666
-    },
-    {
-      "product": "Dank Flower Miami Heat 28g",
+      "product": "Dank Flower Animal Cookies 28g",
       "vendor": "dank. by definition",
       "category": "Flower",
-      "W1": 225.0,
-      "W2": 1175.0,
-      "W3": 1400.0,
-      "W3_vs_W1": 5.222222222222222
-    },
-    {
-      "product": "Tune Beverage Raspberry Lime Single",
-      "vendor": "Tune",
-      "category": "Beverages",
-      "W1": 10.0,
+      "W1": 0.0,
       "W2": 0.0,
-      "W3": 60.0,
-      "W3_vs_W1": 5.0
+      "W3": 2675.0,
+      "W3_vs_W1": 2.0
     },
     {
-      "product": "&Shine Concentrate Creamiscle Sunset 2g",
-      "vendor": "&Shine",
-      "category": "Concentrate",
-      "W1": 150.0,
-      "W2": 525.0,
-      "W3": 825.0,
-      "W3_vs_W1": 4.5
+      "product": "RG Flower Gelato Sherbet 3.5G",
+      "vendor": "Rolling Green Cannabis",
+      "category": "Flower",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 1252.8,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "RG Flower Black Ice 3.5g",
+      "vendor": "Rolling Green Cannabis",
+      "category": "Flower",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 431.2,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "Bettering Co Gummies Energize Lemon Zest 100mg",
+      "vendor": "Bettering Co.",
+      "category": "Edibles",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 579.6,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "Platinum Reserve Flower NY Confidential  3.5g",
+      "vendor": "Platinum Reserve",
+      "category": "Flower",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 1996.4,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "Rythm Flower Sour Diesel 3.5g",
+      "vendor": "Rythm",
+      "category": "Flower",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 1245.13,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "Dank Pre Roll Orange Trainwreck 1g",
+      "vendor": "dank. by definition",
+      "category": "Pre-Rolls",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 968.8,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "NWTN Home Deco Gravity Bong | Amber",
+      "vendor": "NWTN Home",
+      "category": "Accessories",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 176.0,
+      "W3_vs_W1": 2.0
+    },
+    {
+      "product": "Butter Flower Ice Cream Cake 3.5 G",
+      "vendor": "butter",
+      "category": "Flower",
+      "W1": 0.0,
+      "W2": 0.0,
+      "W3": 470.4,
+      "W3_vs_W1": 2.0
     }
   ],
   "sku_movers_down": [
     {
-      "product": "RAW Classic - King Size Slim",
-      "vendor": "RAW",
-      "category": "Accessories",
-      "W1": 110.4,
-      "W2": 63.0,
-      "W3": 6.0,
-      "W3_vs_W1": -0.9456521739130435
-    },
-    {
-      "product": "Nanticoke Pre Roll Single Watermelon Diesel  .5g",
-      "vendor": "Nanticoke",
+      "product": "Jungle Gurl Pre Rolls Harmonious  5pk",
+      "vendor": "Jungle Gurl",
       "category": "Pre-Rolls",
-      "W1": 518.4,
-      "W2": 397.2,
-      "W3": 56.0,
-      "W3_vs_W1": -0.8919753086419753
+      "W1": 113.1,
+      "W2": 113.1,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
     },
     {
-      "product": "Matter Flower Roasted Garlic Margy 28g",
-      "vendor": "Matter.",
+      "product": "HVH Hash Dos'd Papaya 1g",
+      "vendor": "Hudson Cannabis",
+      "category": "Concentrate",
+      "W1": 433.4,
+      "W2": 475.2,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Gas Face 14g",
+      "vendor": "dank. by definition",
       "category": "Flower",
-      "W1": 1560.0,
-      "W2": 3080.0,
-      "W3": 200.0,
-      "W3_vs_W1": -0.8717948717948718
-    },
-    {
-      "product": "Miss Grass Pre Roll Infused Trop Durban X Lemon G 1g",
-      "vendor": "Miss Grass",
-      "category": "Pre-Rolls",
-      "W1": 193.2,
-      "W2": 193.2,
-      "W3": 28.0,
-      "W3_vs_W1": -0.855072463768116
-    },
-    {
-      "product": "MFNY Cartridge Live Resin White Fire .5g",
-      "vendor": "MFNY",
-      "category": "Vape",
-      "W1": 895.5,
-      "W2": 1201.5,
-      "W3": 130.5,
-      "W3_vs_W1": -0.8542713567839196
-    },
-    {
-      "product": "Foy Gummies Nighttime Chews 100mg 20pk",
-      "vendor": "Foy",
-      "category": "Edibles",
-      "W1": 1052.8,
-      "W2": 728.0,
-      "W3": 168.0,
-      "W3_vs_W1": -0.8404255319148937
-    },
-    {
-      "product": "Woodstock Flower Live Nugs Purple Sunset x Purple Punch 4.5g",
-      "vendor": "Woodstock",
-      "category": "Flower",
-      "W1": 470.0,
-      "W2": 269.0,
-      "W3": 77.4,
-      "W3_vs_W1": -0.8353191489361702
-    },
-    {
-      "product": "Level Tablets Indica 20mg 5pk",
-      "vendor": "Level",
-      "category": "Edibles",
-      "W1": 210.0,
-      "W2": 70.0,
-      "W3": 35.0,
-      "W3_vs_W1": -0.8333333333333334
-    },
-    {
-      "product": "Grassroots Flower Dark Heart Genetics Triple Stack 14g",
-      "vendor": "Grassroots",
-      "category": "Flower",
-      "W1": 1518.0,
-      "W2": 488.40000000000003,
-      "W3": 264.0,
-      "W3_vs_W1": -0.8260869565217391
-    },
-    {
-      "product": "Level Tablets Sativa 20mg 5pk",
-      "vendor": "Level",
-      "category": "Edibles",
-      "W1": 385.0,
+      "W1": 4665.6,
       "W2": 0.0,
-      "W3": 70.0,
-      "W3_vs_W1": -0.8181818181818182
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Hippie Crasher 14g",
+      "vendor": "dank. by definition",
+      "category": "Flower",
+      "W1": 1323.0,
+      "W2": 1053.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Rythm Cartridge Live Resin Animal Face .5g",
+      "vendor": "Rythm",
+      "category": "Vape",
+      "W1": 206.8,
+      "W2": 44.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Rythm Flower Gogurtz 3.5g",
+      "vendor": "Rythm",
+      "category": "Flower",
+      "W1": 300.06,
+      "W2": 0.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Peyton Manning 3.5g",
+      "vendor": "dank. by definition",
+      "category": "Flower",
+      "W1": 646.8,
+      "W2": 0.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Skywalker OG Bag 3.5g",
+      "vendor": "dank. by definition",
+      "category": "Flower",
+      "W1": 704.0,
+      "W2": 0.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Sunset Sherbet 28g",
+      "vendor": "dank. by definition",
+      "category": "Flower",
+      "W1": 225.0,
+      "W2": 0.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
+    },
+    {
+      "product": "Dank Flower Twisted Citrus 3.5g",
+      "vendor": "dank. by definition",
+      "category": "Flower",
+      "W1": 1272.0,
+      "W2": 530.0,
+      "W3": 0.0,
+      "W3_vs_W1": -1.0
     }
   ],
   "category_mix": [
