@@ -220,9 +220,18 @@ async function load(){
   document.getElementById('kpi-share').textContent=fmtPct(DATA.kpis?.top20_sku_share_pct);
 
   // Populate previous week (last 7 days) summary if available
+  // Prefer the `prev_week` object when provided. Some data sets may embed
+  // these values inside the `kpis` object using the keys `prev_week_revenue`
+  // and `prev_week_units`. Fall back to those fields if `prev_week` is
+  // undefined.
   if (DATA.prev_week) {
     document.getElementById('kpi-prev-rev').textContent = fmtCurrency(DATA.prev_week.total_revenue);
     document.getElementById('kpi-prev-units').textContent = fmtInt(DATA.prev_week.total_units);
+  } else if (DATA.kpis) {
+    const rev = DATA.kpis.prev_week_revenue;
+    const units = DATA.kpis.prev_week_units;
+    document.getElementById('kpi-prev-rev').textContent = fmtCurrency(rev);
+    document.getElementById('kpi-prev-units').textContent = fmtInt(units);
   }
 
   const moverCols=[
