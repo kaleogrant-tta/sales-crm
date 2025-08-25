@@ -711,5 +711,9 @@
   "data_notes": {
     "period_start": "2025-08-04",
     "period_end": "2025-08-24"
+  },
+  "prev_week": {
+    "total_revenue": 438551.18,
+    "total_units": 12747
   }
 }
